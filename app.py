@@ -53,3 +53,24 @@ input_data = pd.DataFrame(
         "EstimatedSalary": [estimated_salary],
     }
 )
+
+# One-Hot-Encoding 'Geography'
+geo_encoded = one_hot_encoder_Geography.transform([[geography]]).toarray()
+geo_encoded = pd.DataFrame(
+    geo_encoded, columns=one_hot_encoder_Geography.get_feature_nmes()[0]
+)
+
+# Concatenate the input data and the encoded geography
+input_data = pd.concat([input_data.reset_index(drop=True), geo_encoded], axis=1)
+
+# Scale the inoput data
+input_data_scaled = scaler.transform(input_data)
+
+# Predict Churn
+prediction = model.predict(input_data_scaled)
+churn_probability = prediction[0][0]
+
+if churn_probability > 0.5:
+    print("The customer is likely to churn.")
+else:
+    print("The customer is not likely to churn.")
