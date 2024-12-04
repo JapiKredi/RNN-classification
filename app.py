@@ -31,10 +31,10 @@ geography = st.selectbox("Geography", one_hot_encoder_Geography.categories_[0])
 gender = st.selectbox("Gemder", label_encoder_gender.classes_)
 age = st.slider("Age", 18, 92)
 balance = st.number_input("Balance")
-credit_score = st.number_input("Credot Score")
+credit_score = st.number_input("Credit Score", 0, 10)
 estimated_salary = st.number_input("Estimated Salary")
 tenure = st.slider("Tenure", 0, 10)
-num_of_products = st.sider("Number of Products", 1, 4)
+num_of_products = st.slider("Number of Products", 1, 4)
 has_credit_card = st.selectbox("Has Credit Card", [0, 1])
 is_active_member = st.selectbox("Is Active Member", [0, 1])
 
@@ -42,7 +42,7 @@ is_active_member = st.selectbox("Is Active Member", [0, 1])
 
 input_data = pd.DataFrame(
     {
-        "Creditscore": [credit_score],
+        "CreditScore": [credit_score],
         "Gender": [label_encoder_gender.transform([gender])[0]],
         "Age": [age],
         "Tenure": [tenure],
@@ -57,7 +57,7 @@ input_data = pd.DataFrame(
 # One-Hot-Encoding 'Geography'
 geo_encoded = one_hot_encoder_Geography.transform([[geography]]).toarray()
 geo_encoded = pd.DataFrame(
-    geo_encoded, columns=one_hot_encoder_Geography.get_feature_nmes()[0]
+    geo_encoded, columns=one_hot_encoder_Geography.get_feature_names_out(["Geography"])
 )
 
 # Concatenate the input data and the encoded geography
@@ -70,7 +70,8 @@ input_data_scaled = scaler.transform(input_data)
 prediction = model.predict(input_data_scaled)
 churn_probability = prediction[0][0]
 
+
 if churn_probability > 0.5:
-    print("The customer is likely to churn.")
+    st.write("The customer is likely to churn.")
 else:
-    print("The customer is not likely to churn.")
+    st.write("The customer is not likely to churn.")
