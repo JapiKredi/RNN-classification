@@ -32,4 +32,24 @@ gender = st.selectbox("Gemder", label_encoder_gender.classes_)
 age = st.slider("Age", 18, 92)
 balance = st.number_input("Balance")
 credit_score = st.number_input("Credot Score")
-estimated_salary = st.number("Estimated Salary")
+estimated_salary = st.number_input("Estimated Salary")
+tenure = st.slider("Tenure", 0, 10)
+num_of_products = st.sider("Number of Products", 1, 4)
+has_credit_card = st.selectbox("Has Credit Card", [0, 1])
+is_active_member = st.selectbox("Is Active Member", [0, 1])
+
+# Prepare the input data
+
+input_data = pd.DataFrame(
+    {
+        "Creditscore": [credit_score],
+        "Gender": [label_encoder_gender.transform([gender])[0]],
+        "Age": [age],
+        "Tenure": [tenure],
+        "Balance": [balance],
+        "NumOfProducts": [num_of_products],
+        "HasCrCard": [has_credit_card],
+        "IsActiveMember": [is_active_member],
+        "EstimatedSalary": [estimated_salary],
+    }
+)
