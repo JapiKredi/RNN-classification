@@ -7,7 +7,7 @@ import pickle
 
 # Load the trained model
 model = tf.keras.models.load_model(
-    "/Users/jasper/Desktop/RNN-classification/churn_model.h5"
+    "/Users/jasper/Desktop/RNN-classification/regression_model.h5"
 )
 
 # Load the encoders and the scaler
@@ -44,6 +44,7 @@ is_active_member = st.selectbox("Is Active Member", [0, 1])
 input_data = pd.DataFrame(
     {
         "CreditScore": [credit_score],
+        # "Geography": [geography],
         "Gender": [label_encoder_gender.transform([gender])[0]],
         "Age": [age],
         "Tenure": [tenure],
